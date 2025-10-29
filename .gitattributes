@@ -1,0 +1,15 @@
+# Normalizar final de linha (LF) no repo; respeitar do SO no checkout
+* text=auto eol=lf
+
+# Tratar arquivos binários
+*.png binary
+*.jpg binary
+*.pdf binary
+
+# Alembic migrations como texto normal (evitar conflitos de final de linha)
+alembic/versions/*.py text eol=lf
+
+# Arquivos de dados e CSV
+*.csv text eol=lf
+*.json text eol=lf
+*.md text eol=lf

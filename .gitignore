@@ -1,0 +1,71 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+.eggs/
+.build/
+dist/
+build/
+.Python
+.python-version
+
+# Virtualenv
+.venv/
+venv/
+ENV/
+
+# Testes
+.coverage
+htmlcov/
+.coverage.*
+.cache/
+.pytest_cache/
+
+# Mypy / Ruff
+.mypy_cache/
+.ruff_cache/
+
+# Scrapy
+.scrapy/
+
+# Alembic artefatos locais
+alembic/versions/__pycache__/
+# (As migrations *.py você mantém; evite ignorar o diretório inteiro)
+
+# Logs
+*.log
+logs/
+**/scraping.log
+
+# VSCode / IDEs
+.vscode/
+.idea/
+*.iml
+
+# SO
+.DS_Store
+Thumbs.db
+
+# Docker
+*.pid
+**/tmp/
+**/.docker
+**/.dockerenv
+
+# Env & Segredos
+.env
+.env.*
+!.env.example
+
+# Node (se houver tooling auxiliar)
+node_modules/
+
+# Arquivos de desenvolvimento locais
+*.swp
+*.swo
+
+# Arquivos de relatórios temporários
+reports/

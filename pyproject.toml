@@ -1,0 +1,158 @@
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[project]
+name = "job_finder"
+version = "0.1.0"
+description = "Sistema de Coleta e Análise de Vagas de Tecnologia"
+readme = { file = "README.md", content-type = "text/markdown" }
+requires-python = ">=3.10"
+authors = [{ name = "Harrison M Freitas" }]
+license = { text = "Unlicense" }
+keywords = ["scraping", "jobs", "fastapi", "etl", "airflow"]
+
+# Dependências em PROD
+dependencies = [
+  # Banco / ORM
+  "SQLAlchemy~=2.0",
+  "alembic~=1.17",
+  "psycopg[binary]~=3.2",
+
+  # Config/Validação
+  "pydantic~=2.12",
+  "pydantic-settings~=2.11",
+  "python-dotenv~=1.0",
+
+  # Logging
+  "structlog~=25.0",
+
+  # I/O, HTML parsing e Scraping
+  "httpx~=0.28",
+  "beautifulsoup4~=4.14",
+  "Scrapy~=2.13",
+
+  # API
+  "fastapi~=0.120",
+  "uvicorn[standard]~=0.38",
+
+  # Performance
+  "uvloop>=0.20; platform_system != 'Windows'",
+
+  # Observabilidade
+  "prometheus-client~=0.23"
+]
+
+# Extras opcionais por "perfil" de uso
+[project.optional-dependencies]
+# Desenvolvimento/qualidade (instale com: pip install -e .[dev])
+dev = [
+  "black>=24.8",
+  "ruff>=0.6.9",
+  "mypy>=1.13",
+  # "sqlalchemy-stubs>=0.4",
+  "types-requests>=2.32.0.20241016",
+  "types-python-dateutil>=2.9.0.20241009",
+  "watchfiles>=1.1",
+]
+
+# Testes (instale com: pip install -e .[test])
+test = [
+  "pytest~=8.4",
+  "pytest-cov~=7.0",
+  "Faker~=37.12",
+  "time-machine~=2.19",
+]
+
+# Stack de API (instale com: pip install -e .[api])
+api = [
+  "fastapi~=0.120",
+  "uvicorn[standard]~=0.38",
+  "prometheus-client~=0.23",
+]
+
+# Stack de Scraping (instale com: pip install -e .[scraping])
+scraping = [
+  "Scrapy~=2.13",
+  "beautifulsoup4~=4.14",
+  "httpx~=0.28",
+  "parsel>=1.10",
+  "tldextract>=5.3",
+]
+
+# Airflow (instale com constraints — ver instruções abaixo)
+airflow = [
+  "apache-airflow[postgres,celery,redis,statsd]==2.10.*",
+  # Providers comuns (ajuste conforme seu DAG):
+  "apache-airflow-providers-postgres==6.*",
+  "apache-airflow-providers-http==4.*",
+  # Adicione outros se necessário (amazon, google, slack, etc.)
+]
+airflow3 = [
+  "apache-airflow[postgres,celery,redis,statsd]~=3.1",
+  "apache-airflow-providers-postgres",
+  "apache-airflow-providers-http",
+]
+
+
+[project.urls]
+Homepage = "https://example.com"
+Repository = "https://example.com/repo"
+Issues = "https://example.com/repo/issues"
+
+[project.scripts]
+# job-finder = "job_finder.cli:app"
+
+# -------------------------------------
+# Ferramentas de build/empacotamento
+# -------------------------------------
+[tool.hatch.build.targets.wheel]
+packages = ["src/job_finder"]
+
+[tool.black]
+line-length = 100
+target-version = ["py310"]
+
+[tool.ruff]
+line-length = 100
+src = ["src", "tests"]
+format.preview = true
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "C90"]
+ignore = ["E501"]
+
+[tool.mypy]
+python_version = "3.13"
+strict = true
+warn_unused_ignores = true
+disallow_untyped_defs = true
+ignore_missing_imports = true
+plugins = ["sqlalchemy.ext.mypy.plugin", "pydantic.mypy"]
+mypy_path = "src"
+files = ["src"]
+
+[[tool.mypy.overrides]]
+module = ["job_finder.scraping.*"]
+disallow_subclassing_any = false
+
+[[tool.mypy.overrides]]
+module = ["job_finder.api.*"]
+disallow_any_decorated = false
+
+[[tool.mypy.overrides]]
+module = ["scrapy", "scrapy.*", "alembic", "alembic.*"]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+addopts = "-q --cov=src --cov-report=term-missing"
+pythonpath = ["src"]
+testpaths = ["tests"]
+
+[tool.coverage.run]
+branch = true
+source = ["src/job_finder"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
