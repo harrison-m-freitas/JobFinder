@@ -1,6 +1,6 @@
 # JobHunter — Data Platform
 
-![CI](https://github.com/<seu-usuario>/<seu-repo>/actions/workflows/ci.yml/badge.svg)
+![CI](https://github.com/harrison-m-freitas/JobFinder/actions/workflows/ci.yml/badge.svg)
 
 
 **Fases ativas:** Fase 1 (Setup) e Fase 2 (DB/ORM)
