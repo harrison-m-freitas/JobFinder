@@ -4,9 +4,14 @@ from __future__ import annotations
 import os
 
 import pytest
+from sqlalchemy.orm import Session
 
-# 1) Força DB de teste ANTES de qualquer import do app
-os.environ.setdefault("DATABASE_URL", "sqlite+pysqlite:///:memory:")
+from tests.factories import company_factory as _company_factory
+from tests.factories import job_factory as _job_factory
+
+# 1) Configura variável de ambiente para usar banco de dados de teste
+os.environ["DATABASE_URL"] = "sqlite+pysqlite:///:memory:"
+os.environ.setdefault("APP_ENV", "test")
 
 # 2) Importa engine e metadata
 # 3) Garante que modelos foram registrados
@@ -21,3 +26,13 @@ def _create_schema():
     Base.metadata.create_all(bind=engine)
     yield
     Base.metadata.drop_all(bind=engine)
+
+
+@pytest.fixture
+def company_factory(db: Session):
+    return _company_factory(db)
+
+
+@pytest.fixture
+def job_factory(db: Session):
+    return _job_factory(db)

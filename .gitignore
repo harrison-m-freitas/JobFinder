@@ -24,6 +24,11 @@ htmlcov/
 .cache/
 .pytest_cache/
 
+# Backups
+backups/*
+!backups/.gitkeep
+
+
 # Mypy / Ruff
 .mypy_cache/
 .ruff_cache/
@@ -66,6 +71,10 @@ node_modules/
 # Arquivos de desenvolvimento locais
 *.swp
 *.swo
+*.bak
+
+# Arquivos de saída de contexto (se aplicável)
+context.out
 
 # Arquivos de relatórios temporários
 reports/

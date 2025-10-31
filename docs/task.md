@@ -209,15 +209,15 @@ Desenvolver um sistema automatizado de web scraping para coletar, armazenar e pr
 - [x] 1.3 Setup Docker e Docker Compose
 - [x] 1.4 Escolher e configurar banco de dados
 - [x] 1.5 Criar estrutura de projeto Python
-- [ ] 1.6 Configurar sistema de versionamento e CI/CD
+- [x] 1.6 Configurar sistema de versionamento e CI/CD
 
 ### 2. Modelagem e Banco de Dados (Story Points: 13)
 - [x] 2.1 Definir modelagem completa de dados
 - [x] 2.2 Criar migrations do banco de dados
 - [x] 2.3 Implementar models/ORM
 - [x] 2.4 Criar índices para otimização
-- [ ] 2.5 Implementar sistema de backup
-- [ ] 2.6 Desenvolver scripts de seed/fixtures para testes
+- [x] 2.5 Implementar sistema de backup
+- [x] 2.6 Desenvolver scripts de seed/fixtures para testes
 
 ### 3. Core do Sistema de Scraping (Story Points: 21)
 - [x] 3.1 Criar classe base abstrata para scrapers

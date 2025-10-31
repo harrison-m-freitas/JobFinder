@@ -59,3 +59,9 @@ def test_unique_source_external(db: Session) -> None:
     with pytest.raises(IntegrityError):
         db.commit()
     db.rollback()
+
+
+def test_list_two_jobs(db, job_factory):
+    j1 = job_factory(title="Backend Engineer")
+    j2 = job_factory(title="Data Engineer")
+    assert j1.id != j2.id

@@ -15,6 +15,24 @@ services:
       retries: 10
     volumes:
       - pg_data:/var/lib/postgresql/data
+      - ./backups:/backups
+
+  db-backup:
+    image: prodrigestivill/postgres-backup-local:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_HOST: db
+      POSTGRES_DB: ${POSTGRES_DB:-jobhunter}
+      POSTGRES_USER: ${POSTGRES_USER:-app}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-app}
+      # 03:00 UTC diariamente
+      CRON_SCHEDULE: "0 3 * * *"
+      POSTGRES_EXTRA_OPTS: "-Z9 -Fc -j 2"
+    volumes:
+      - ./backups:/backups
+    depends_on:
+      db:
+        condition: service_healthy
 
   app:
     build:

@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 COPY pyproject.toml README.md /work/
 COPY src /work/src
-RUN pip install --upgrade pip && pip install -e ".[api,airflow3,scraping]"
+RUN pip install --upgrade pip && pip install -e ".[api,airflow3,scraping,test]"
 
 COPY . /work
 
