@@ -9,12 +9,6 @@ from sqlalchemy.orm import Session
 
 from job_finder.db.models.company import Company
 from job_finder.db.models.job import Job
-from job_finder.db.session import SessionLocal
-
-
-@pytest.fixture
-def db() -> Session:
-    return SessionLocal()
 
 
 def test_insert_company_and_job(db: Session) -> None:

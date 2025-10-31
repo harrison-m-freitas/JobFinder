@@ -15,6 +15,10 @@ class RemoteOKSpider(scrapy.Spider):
     name = "remoteok"
     allowed_domains = ["remoteok.com"]
     start_urls = [f"{BASE}/remote-dev-jobs"]
+    custom_settings = {
+        "CONCURRENT_REQUESTS": 2,
+        "DOWNLOAD_DELAY": 1.5,
+    }
 
     def parse(self, response: Response) -> Iterable[dict[str, Any]]:
         for row in response.css("tr.job"):

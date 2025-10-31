@@ -1,9 +1,17 @@
 from __future__ import annotations
 
+import os
 from datetime import datetime
 
 from fastapi import FastAPI, Query
-from prometheus_client import CONTENT_TYPE_LATEST, Counter, Histogram, generate_latest
+from prometheus_client import (
+    CONTENT_TYPE_LATEST,
+    CollectorRegistry,
+    Counter,
+    Histogram,
+    generate_latest,
+    multiprocess,
+)
 from pydantic import BaseModel
 from sqlalchemy import and_, or_, select
 from sqlalchemy.orm import Session
@@ -40,7 +48,14 @@ def health() -> dict[str, str]:
 
 @app.get("/metrics")
 def metrics() -> Response:
-    return Response(generate_latest(), media_type=CONTENT_TYPE_LATEST)
+    if os.getenv("PROMETHEUS_MULTIPROC_DIR"):
+        registry = CollectorRegistry()
+        mp_collect = getattr(multiprocess, "MultiProcessCollector", None)
+        if mp_collect is not None:
+            mp_collect(registry)
+    else:
+        payload = generate_latest()
+    return Response(payload, media_type=CONTENT_TYPE_LATEST)
 
 
 @app.get("/jobs", response_model=list[JobOut])

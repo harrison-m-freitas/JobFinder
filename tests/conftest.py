@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import os
+from collections.abc import Iterator
 
 import pytest
 from sqlalchemy.orm import Session
@@ -19,6 +20,26 @@ import job_finder.db.models.company  # noqa: F401
 import job_finder.db.models.job  # noqa: F401
 from job_finder.db.models.base import Base
 from job_finder.db.session import engine
+
+try:
+    from job_finder.db.session import SessionLocal
+except ImportError:
+    from sqlalchemy.orm import sessionmaker
+
+    SessionLocal = sessionmaker(bind=engine)
+
+
+@pytest.fixture
+def db() -> Iterator[Session]:
+    session = SessionLocal()
+    for table in reversed(Base.metadata.sorted_tables):
+        session.execute(table.delete())
+    session.commit()
+    try:
+        yield session
+    finally:
+        session.rollback()
+        session.close()
 
 
 @pytest.fixture(scope="session", autouse=True)

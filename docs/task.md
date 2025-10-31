@@ -222,12 +222,12 @@ Desenvolver um sistema automatizado de web scraping para coletar, armazenar e pr
 ### 3. Core do Sistema de Scraping (Story Points: 21)
 - [x] 3.1 Criar classe base abstrata para scrapers
 - [x] 3.2 Implementar sistema de detecção de robots.txt
-- [ ] 3.3 Desenvolver rate limiting e delays
-- [ ] 3.4 Implementar rotação de User-Agents
-- [ ] 3.5 Sistema de retry com backoff exponencial
-- [ ] 3.6 Implementar proxy rotation (se necessário)
-- [ ] 3.7 Sistema de cache para evitar reprocessamento
-- [ ] 3.8 Deduplicação de vagas
+- [x] 3.3 Desenvolver rate limiting e delays
+- [x] 3.4 Implementar rotação de User-Agents
+- [x] 3.5 Sistema de retry com backoff exponencial
+- [x] 3.6 Implementar proxy rotation (se necessário)
+- [x] 3.7 Sistema de cache para evitar reprocessamento
+- [x] 3.8 Deduplicação de vagas
 
 ### 4. Scrapers - Job Boards Generalistas (Story Points: 34)
 - [ ] 4.1 Scraper: LinkedIn Jobs
